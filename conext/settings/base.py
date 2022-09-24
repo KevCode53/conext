@@ -18,7 +18,9 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-LOCAL_APPS = []
+LOCAL_APPS = [
+    'apps.users'
+]
 
 BASE_APPS = [
     'django.contrib.admin',
@@ -30,7 +32,8 @@ BASE_APPS = [
 ]
 
 THIRD_APPS = [
-  'rest_framework'
+    'rest_framework',
+    'simple_history'
 ]
 
 INSTALLED_APPS = BASE_APPS + LOCAL_APPS + THIRD_APPS 
@@ -43,6 +46,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # Simple History
+    'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'conext.urls'
@@ -105,3 +110,14 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Modelo de Usuario y Backen de Autenticacion
+AUTH_USER_MODEL = 'users.User'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'apps.users.backend.AuthByEmailBackend',
+    'apps.users.backend.AuthByPhoneBackend',
+]
+
